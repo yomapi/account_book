@@ -11,6 +11,10 @@ django-rest-framework = "^0.1.0"
 PyYAML = "^6.0"
 black = "^22.10.0"
 mysqlclient = "^2.1.1"
+bcrypt = "^4.0.1"
+pytest = "^7.2.0"
+pytest-django = "^4.5.2"
+PyJWT = "^2.6.0"
 
 [tool.poetry.dev-dependencies]
 

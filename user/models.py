@@ -14,9 +14,7 @@ class User(BaseModel):
 
 class Token(BaseModel):
     user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        db_column="user_id",
+        User, on_delete=models.CASCADE, db_column="user_id", unique=True
     )
     token = models.CharField(max_length=255, default=None)
 
