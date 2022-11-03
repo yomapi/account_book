@@ -1,7 +1,6 @@
 import pytest
 from django.conf import settings
 from user.services import user_service
-from user.schema import SignUpReqSchema
 
 
 @pytest.fixture(scope="session")

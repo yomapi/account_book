@@ -21,7 +21,12 @@ class TokenRepo(BaseRepo):
         return self.serializer(obj).data
 
     def get_by_user_id(self, user: int) -> dict:
-        return self.serializer(self.model.objects.get(user=user, deleted_at=None)).data
+        try:
+            return self.serializer(
+                self.model.objects.get(user_id=user, deleted_at=None)
+            ).data
+        except self.model.DoesNotExist:
+            return None
 
     def delete_by_user_id(self, user: int) -> None:
         token = self.get_by_user_id(user)
