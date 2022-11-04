@@ -10,9 +10,9 @@ class BaseRepo:
 
     def _get_query_by_soft_deleted(self, data_id: int, is_deleted: bool):
         return (
-            self.model.objects.get(id=data_id)
+            self.model.objects.get(id=data_id, deleted_at__isnull=False)
             if is_deleted
-            else self.model.objects.get(id=data_id, deleted_at=None)
+            else self.model.objects.get(id=data_id, deleted_at__isnull=True)
         )
 
     def _validate_serializer_and_save(self, serializer: BaseSerializers) -> dict:
