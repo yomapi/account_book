@@ -67,8 +67,8 @@ class AuthProvider:
     def check_auth(self, token: str) -> bool:
         decoded = self._decode(token)  # decode func will raise error on expired
         user = user_repo.get(decoded["id"])
-        saved_token = token_repo.get_by_user_id(user["id"])["token"]
-        if user and (token == saved_token):
+        saved_token = token_repo.get_by_user_id(user["id"])
+        if user and saved_token != None and (token == saved_token["token"]):
             return user["id"]
         else:
             raise NotAuthorizedError

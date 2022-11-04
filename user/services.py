@@ -11,7 +11,8 @@ class UserService:
         return {"access": auth_provider.login(email, password)}
 
     def logout(self, user_id: str):
-        return token_repo.delete_by_user_id(user_id)
+        token_repo.delete_by_user_id(user_id)
+        return True
 
 
 user_service = UserService()

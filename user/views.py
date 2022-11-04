@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import JSONParser
 from user.schema import SignUpReqSchema
+from decorators.auth_decorators import must_be_user
 
 
 @api_view(["POST"])
@@ -30,5 +31,15 @@ def login(request):
         user_service.login(
             email=request_data["email"], password=request_data["password"]
         ),
+        status=status.HTTP_201_CREATED,
+    )
+
+
+@api_view(["POST"])
+@must_be_user()
+@parser_classes([JSONParser])
+def logout(request):
+    return JsonResponse(
+        {"success": user_service.logout(request.user)},
         status=status.HTTP_201_CREATED,
     )

@@ -15,8 +15,7 @@ class TokenRepo(BaseRepo):
     def upsert(self, user_id: int, user: CustomUser, token: str):
         obj, created = self.model.objects.update_or_create(
             user=user_id,
-            deleted_at=None,
-            defaults={"user": user, "token": token},
+            defaults={"user": user, "token": token, "deleted_at": None},
         )
         return self.serializer(obj).data
 
@@ -29,8 +28,11 @@ class TokenRepo(BaseRepo):
             return None
 
     def delete_by_user_id(self, user: int) -> None:
-        token = self.get_by_user_id(user)
-        serilizer = self.serializer(self.model(**{**token, "deleted_at": datetime.now}))
+        token = self.model.objects.get(user_id=user, deleted_at=None)
+        serilizer = self.serializer(
+            token, data={"deleted_at": datetime.now()}, partial=True
+        )
+
         self._validate_serializer_and_save(serilizer)
 
 
